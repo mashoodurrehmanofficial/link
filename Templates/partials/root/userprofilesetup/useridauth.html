@@ -1,0 +1,257 @@
+
+{% if user_profile.email_verified == False %} <br>
+<div class="container"><br>
+  <div class="container" style="position: relative;">
+    <div id="verifyemaildiv"class=" card-panel grey lighten-5" style="margin: 0px;">
+      <span class="green center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-30px;left: 50px;right: 50px;padding: 5px 10px;">Verify your Email</span>
+        <br>
+        <div class="" style="display: flex;justify-content: center;align-items: center;">
+          <span style="padding: 10px 15px;border-radius: 20px;" class="white lighten-3 z-depth-1"><i style="display: none;" id="verifiedcheckicon" class="material-icons green-text left">check</i>  {{user.email}}</span>
+        </div> <br>
+<!-- LOADER -->
+<div id="loader" style="display: none;">
+        <div style="display: flex;justify-content: center;align-items: center;">
+            <div class="preloader-wrapper big active">
+              <div class="spinner-layer spinner-blue">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+        
+              <div class="spinner-layer spinner-red">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+        
+              <div class="spinner-layer spinner-yellow">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+        
+              <div class="spinner-layer spinner-green">
+                <div class="circle-clipper left">
+                  <div class="circle"></div>
+                </div><div class="gap-patch">
+                  <div class="circle"></div>
+                </div><div class="circle-clipper right">
+                  <div class="circle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+<!-- END PRELOADER -->
+        <div id="emailcodediv" class="input-field" style="display: none;">
+          <input name="emailcode" id="emailcode" type="text" class="validate">
+          <label for="emailcode">Enter Code sent to your Email</label>
+        </div>   <br>
+      <span id="sendcode" class="green btn" style="text-transform: none;width: 100%;font-size: large;">Send Code </span>
+      <span id="verifysentcode" class="green btn" style="text-transform: none;width: 100%;font-size: large;display: none;">Verify Code</span>
+  </div>
+  </div>
+  </div> 
+<script>  
+document.getElementById('sendcode').addEventListener('click', function(){ 
+  this.innerHTML="<b>Sending Code . . .</b>"
+  $('#loader').show()
+  $.ajax({
+    url: '/sendemailcode', 
+    success:function(data){
+      if(data.status==1){
+        M.toast({html: 'Code Sent ', classes: 'rounded green'});
+        $('#loader').hide()
+        $('#emailcodediv').show()
+        $('#sendcode').html("Verify code") 
+        $('#sendcode').hide()
+        var emailcode = document.getElementById('emailcode')
+        $('#verifysentcode').show().click(function(){
+          $('#sendcode').html('<b>Verifying Cide . . .</b>')
+          $.ajax({
+            url:'/verifysentcode',
+            data:{'emailcode':emailcode.value},
+            success:function(data2){
+              if(data2.status==1){
+                $('#verifyemaildiv').prepend(`<br><div id="thumb_up" style="display: flex;justify-content: center;align-self:center;"><i  class="material-icons green-text large">thumb_up</i><br>`)
+                $('#verifiedcheckicon').show()
+                $('#emailcodediv').hide()
+                $('#verifysentcode').hide()
+                $('#verifyemaildiv').append(`<br><div style="display: flex;justify-content: center;align-self:center;"><span id="completeemailverification" class=" btn green" style="text-transform: none;font-size: large;z-index:1;padding:0px 30px"> Submit and get started </span></div>`) 
+                M.toast({html: 'Email verified successfully ! ', classes: 'rounded green'});
+                $('#completeemailverification').click(function(){
+                  window.location='/dashboard'
+                })
+              }
+              
+            }
+
+          })
+      })
+      }else{
+        alert("There was an error")
+      }
+    }
+  })
+})
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% elif user_profile.website == '' %}  <br>
+<div class="container"><br>
+<div class="container" style="position: relative;">
+  <div id="verifylinkform"class=" card-panel grey lighten-5" style="margin: 0px;">
+    <span class="green center white-text z-depth-3" style="font-size: 30px;margin: 0px;position: absolute;top:-30px;left: 50px;right: 50px;padding: 5px 10px;">Setup your ID</span>
+    <br>
+    <br>
+      <div id="weblinkdiv" class="input-field">
+        <input name="weblink" id="weblink" type="text" class="validate">
+        <label for="weblink">Enter website link  e.g www.example.com</label>
+      </div>   
+    <span id="verifylink" class="green btn" style="text-transform: none;width: 100%;font-size: large;">Verify Link </span>
+</div>
+</div>
+</div> 
+<script> 
+var weblink = document.getElementById('weblink')
+document.getElementById('verifylink').addEventListener('click', function(){ 
+var y = new URL(weblink.value) 
+var resultatnID = ''
+if(y!='' || y!=undefined){
+  $.ajax({
+    url:'/verifylink'  , 
+    data:{"link":weblink.value },
+    beforeSend: function () {
+        $("#verifylink").html("Verifying Link . . .");
+      },
+      complete: function () {
+        $("#verifylink").html("Verify Link"); 
+      },
+    success:function(data){
+      if(data.status==200){
+        M.toast({html: 'Link verified Successfully!', classes: 'rounded green'});
+        $('#weblinkdiv').hide()
+        $('#verifylink').hide() 
+        $('#verifylinkform').append(`<div id="thumb_up" style="display: flex;justify-content: center;align-self:center;"><i  class="material-icons green-text large">thumb_up</i><br>`)
+        $('#verifylinkform').append(`<br><div style="display: flex;justify-content: center;align-self:center;"><span id="generateid" class=" btn grey lighten-4 grey-text text-darken-4" style="pointer:default;text-transform: none;font-size: large;z-index:1;padding:0px 30px">Your ID is: `+y.hostname+`  </span></div>`)
+        $('#verifylinkform').append(`<br><div style="display: flex;justify-content: center;align-self:center;"><span id="submitID" class=" btn green" style="text-transform: none;font-size: large;z-index:1;padding:0px 30px"> Submit and get started </span></div>`)
+       $('#submitID').click(function(){
+         $.ajax({
+           url: '/submitID',
+           data:{'website':y.host},
+           success:function(){
+             window.location='/dashboard'
+           }
+         })
+       })
+      
+      }else{alert("Please use Correct Link or check your Internet Connection !")};
+    }, 
+    error:function(){
+        alert("Please use Correct Link or check your Internet Connection !") 
+
+    }
+  })
+}
+})
+</script>  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- SECTION =======> 2 -->
+{% elif user_profile.gender == '' %}  <br>
+<div class="container"><br>
+  <div class="container" style="position: relative;">
+    <div id="verifyemaildiv"class=" card-panel grey lighten-5" style="margin: 0px;">
+      <span class="green center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-30px;left: 50px;right: 50px;padding: 5px 10px;">Setup your Info</span>
+        
+       <form action="/personalinfo">
+        <p >
+          <label>
+            <input class="with-gap red" name="male" type="radio"  />
+            <span>Male</span>
+          </label>
+        </p>
+        <p>
+          <label>
+            <input class="with-gap" name="female" type="radio"  />
+            <span>Female</span>
+          </label>
+        </p> 
+        <br>
+        <button type="submit" id="sendcode" class="green btn" style="text-transform: none;width: 100%;font-size: large;">Submit</button>
+       
+       </form>
+
+      
+    </div>
+  </div>
+  </div> 
+{% endif %}
+  
+
+
+
+
+
+
+
+
+
+
+
+
+

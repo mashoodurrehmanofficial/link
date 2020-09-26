@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+{% block 'mainbody' %}
+<!-- Setting UP ID -->
+<!-- SECTION - Sidebar for medium and large screens -->
+{% include "partials/root/sidebar.html" %}
+<!-- SECTION - USER PROFILE -->
+<main>
+    <!-- SECTION - USERID_AUTH -->
+    {% if user_profile.gender == '' %} 
+    {% include "partials/root/userprofilesetup/useridauth.html" %}
+    <!-- SECTION - PROFILE_CARD -->
+    {% else %} 
+    
+    <h1>clain Traffic</h1>
+    
+
+
+    {% endif %}
+</main>  
+{% endblock 'mainbody' %} 
+{% block 'js' %} 
+<script> 
+</script>
+{% endblock 'js' %}     

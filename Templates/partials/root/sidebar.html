@@ -1,0 +1,94 @@
+<ul id="slide-out" class="sidenav sidenav-fixed " style="width: 250px;margin-top: 65px;padding-bottom: 200px;"> 
+ 
+    <div class="background" style="position: relative;line-height: 0;">
+      <p style="position: absolute;color:white;bottom:10px;left: 5px;">{{user}}</p>
+      
+      {% if  user_profile.gender == 'Female' %}
+      <img style="position: absolute;top: 8px;left: 7px;;border: 2px solid white;" height="50px" width="50px" class="circle" src="https://www.flaticon.com/svg/static/icons/svg/2922/2922565.svg"> 
+      {% else %}
+      <img style="position: absolute;top: 8px;left: 7px;border: 2px solid white;" height="50px" width="50px" class="circle" src="https://www.flaticon.com/svg/static/icons/svg/168/168882.svg"> 
+        
+      {% endif %}
+      
+        
+      <img style="width: 250px;width: 250px;" src="https://cdn.dribbble.com/users/1711487/screenshots/14041707/web-traffic-illustration-small-01.jpg">
+    </div> 
+ 
+     <!-- DROPDOWN DASHBOARD -->
+     <ul class="collapsible collapsible-accordion">
+      <li class="active">
+        <!-- ACTIVATOR -->
+        <a class="collapsible-header" style="font-size: 18px">
+          Dashboard
+          <i class="material-icons" style="margin-right: 16px;">dashboard</i>
+          <i class="material-icons right">arrow_drop_down</i>
+        </a>
+        <!-- DROPDOWN CONTENT -->
+        <div class="collapsible-body">
+          <ul>
+            
+            
+        <a href="{% url 'grablinks' %}" class="sidebaritems" id="sidebaritems" style="box-sizing:border-box;padding: 0%;display: block;color: rgb(65, 65, 65);font-size: 18px;background-color: rgb(253, 253, 253);padding: 0px 0px 0px 20px;">
+          Grab Links 
+          <i class="material-icons left" style="box-sizing: border-box !important;padding-top: 10px;">file_download</i>
+        </a> 
+        <div class="divider" style="margin-top: 0px !important;"></div>    
+     
+        <a href="{% url 'claimtraffic' %}" class="sidebaritems" id="sidebaritems" style="box-sizing:border-box;padding: 0%;display: block;color: rgb(65, 65, 65);font-size: 18px;background-color: rgb(253, 253, 253);padding: 0px 0px 0px 20px;">
+          Claim Traffic
+          <i class="material-icons left" style="box-sizing: border-box !important;padding-top: 10px;">swap_horiz</i>
+        </a> 
+        <div class="divider" style="margin-top: 0px !important;"></div>    
+ 
+        <a href="{% url 'configureurls' %}" class="sidebaritems" id="sidebaritems" style="box-sizing:border-box;padding: 0%;display: block;color: rgb(65, 65, 65);font-size: 18px;background-color: rgb(253, 253, 253);padding: 0px 0px 0px 20px;">
+          Configure URLs
+          <i class="material-icons left" style="box-sizing: border-box !important;padding-top: 10px;">link</i>
+        </a> 
+        <div class="divider" style="margin-top: 0px !important;"></div>    
+ 
+        <a href="{% url 'statistics' %}" class="sidebaritems" id="sidebaritems" style="box-sizing:border-box;padding: 0%;display: block;color: rgb(65, 65, 65);font-size: 18px;background-color: rgb(253, 253, 253);padding: 0px 0px 0px 20px;">
+          Statistics 
+          <i class="material-icons left" style="box-sizing: border-box !important;padding-top: 10px;">bar_chart</i>
+        </a> 
+        <div class="divider" style="margin-top: 0px !important;"></div>    
+ 
+        <!-- <a href="{% url 'dashboard' %}" class="sidebaritems" id="sidebaritems" style="box-sizing:border-box;padding: 0%;display: block;color: rgb(65, 65, 65);font-size: 18px;background-color: rgb(253, 253, 253);padding: 0px 0px 0px 20px;">
+          Dashboard 
+          <i class="material-icons left" style="box-sizing: border-box !important;padding-top: 10px;">link</i>
+        </a> 
+        <div class="divider" style="margin-top: 0px !important;"></div>     -->
+
+
+          </ul>
+        </div>
+      </li>
+    </ul> 
+
+
+
+       
+
+        <a  href="{% url 'profile' %}"  class="sidebaritems" id="sidebaritems" style="padding: 0%;padding-left: 10px;display: block;color: rgb(65, 65, 65);font-size: 18px;background-color: rgb(253, 253, 253);padding: 12px 30px 12px 20px;" >Perosnal Info <i class="material-icons  left">person_pin</i></a>
+        <div class="divider" style="margin-top: 0px !important;"></div>    
+                                                                                                                                                                                                               
+        <a href="{% url 'logout' %}" class="sidebaritems" id="sidebaritems" style="padding: 0%;padding-left: 10px;display: block;color: rgb(65, 65, 65);font-size: 18px;background-color: rgb(253, 253, 253);padding: 12px 30px 12px 20px;" > <i class="material-icons  left">exit_to_app</i>Log out </a>
+        <div class="divider" style="margin-top: 0px !important;"></div>    
+       
+  </ul>
+  <!-- ACTIVATOR -->
+  <!-- <a style="margin: 10px 10px ;display: none;" data-target="slide-out" class="sub_sidebar_activator sidenav-trigger btn-floating  waves-effect waves-light green accent-4"><i class="material-icons">menu</i></a> -->
+
+
+{% block 'js' %}
+<script>
+$(document).ready(function(){
+ $('sidebaritems').click(function(){
+  sessionStorage["scrollPosition"] = $('.sidenav').scrollTop();
+ });
+ $('sidenav').scrollTop(sessionStorage["scrollPosition"]);
+   sessionStorage.clear();
+});
+
+</script>
+{% endblock 'js' %}
+  

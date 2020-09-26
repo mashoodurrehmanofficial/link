@@ -1,0 +1,20 @@
+<div id="col2" class="col s12 m3 l3 " style="padding:0px 5px 0px 0px  !important;"> <br>
+                
+    <div id="ad2" class="grey lighten-2 ad" style="height: 400px;width: 100%;">ads</div> <br>
+    
+    
+    <!-- RELATED ARTICLES -->
+    <div id="related" style="width: 100%;border-radius:10px;position: relative;" class="z-depth-1">
+        <p style="padding-top: 10px;text-align: center;font-weight:600;font-size: 25px;margin: 0px !important">Related tutorials</p>
+        <ul id="related" style="margin-top: 0px !important;padding-bottom: 15px;"> 
+            {% for related_article in related_articles %} 
+            <a  id="sidebaritems" style="border-left: 3px solid green;padding: 0%;padding-left: 10px;display: block;color: rgb(65, 65, 65);font-size: 15px;background-color: rgb(253, 253, 253);padding: 9px 7px 7px 5px;" href="{{related_article.url}}">{{related_article}}</a><div class="divider" style="margin-top: 3px !important;"></div> 
+            {% endfor %}
+        </ul> 
+        <span style="position: absolute;bottom: -12px;left: 40%;;border-radius:10px;padding: 0px 5px;z-index: 1;margin: auto;" class="green white-text pulse">15+ more</span>
+    </div>  
+    
+    
+    <div id="ad3" class="grey lighten-2 ad" style="height: 400px;width: 100%;">ads</div> <br>
+
+</div>

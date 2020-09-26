@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block 'mainbody' %}
+
+
+
+ <br><br><br>
+<div class="container">
+<div class="container">
+<div class="container">
+<div class="container">
+
+<form action="" method="post" class=" card-panel grey lighten-5" style="position: relative;">{% csrf_token %}
+  <div class="green" style="position: absolute;padding:20px 23px 20px 23px;top:-50px;left: 33.5%;border-radius: 50%;"><i class="material-icons white-text" style="font-size: 50px;">person_add</i></div>
+  <div style="margin-top: 8px;"> 
+    <div class="input-field">
+      <input name="name" id="name" type="text" class="validate">
+      <label for="name">Username</label>
+    </div> 
+  
+  
+    <div class="input-field">
+      <input name="email" id="email" type="text" class="validate">
+      <label for="email">Email</label>
+    </div> 
+    <div class="input-field">
+      <input name="password" id="password" type="text" class="validate">
+      <label for="password">Password</label>
+    </div>  
+
+
+
+
+  </div><br>
+  
+  <input type="submit" value="  Register  " class="btn green">
+</form>
+  
+
+</div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

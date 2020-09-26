@@ -1,0 +1,21 @@
+{% extends 'base.html' %}v  
+{% block 'mainbody' %}
+    {{user}}
+{% endblock 'mainbody' %} 
+
+
+{% block 'js' %}
+<script>
+url = new URL(window.location.href)
+var ip = url.searchParams.get('ip')
+var userid = url.searchParams.get('userid')
+var link = window.location.origin+window.location.pathname
+// $.ajax({
+//     url:'sessioncompleted', 
+//     data:{"ip":ip,"userid":userid,"link":link},
+//     success:function(data){
+//     console.log(data);
+//     }
+// })
+</script>
+{% endblock 'js' %}     

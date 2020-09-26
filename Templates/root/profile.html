@@ -1,0 +1,45 @@
+
+{% extends 'base.html' %}
+{% block 'mainbody' %}
+
+    <!-- Setting UP ID -->
+<!-- SECTION - Sidebar for medium and large screens -->
+{% include "partials/root/sidebar.html" %}
+
+<!-- SECTION - USER PROFILE -->
+<main>
+    <!-- SECTION - USERID_AUTH -->
+    {% if user_profile.gender == '' %} 
+    {% include "partials/root/userprofilesetup/useridauth.html" %}
+    <!-- SECTION - PROFILE_CARD -->
+    {% else %} 
+    
+    <div style="padding: 20px;margin:30px 60px 0px 60px;border-radius:20px" class="z-depth-1">
+        <!-- Image -->
+        <div style="display: flex;justify-content: center;align-items:center;position: relative;">
+            <i class="material-icons z-depth-1 circle green-text" style="position: absolute;top: 0px;right: 10px;font-size: 20px;padding: 5px;" >done</i>
+            {% if  user_profile.gender == 'Female' %}
+            <img style="border: 2px solid grey;" height="150px" width="150px" class="circle" src="https://www.flaticon.com/svg/static/icons/svg/2922/2922565.svg"> 
+            {% else %}
+            <img style="border: 2px solid grey;" height="150px" width="150px" class="circle" src="https://www.flaticon.com/svg/static/icons/svg/168/168882.svg"> 
+            {% endif %}
+        </div>
+        
+        <ul class="collection">
+            <li class="collection-item"><b>Username: </b>{{user.username}}</li>
+            <li class="collection-item"><b>Email: </b>{{user.email}}</li>
+            <li class="collection-item"><b>Email Verified: </b>{{user_profile.email_verified}}</li>
+            <li class="collection-item"><b>Gender: </b>{{user_profile.gender}}</li>
+            <li class="collection-item"><b>Website: </b>{{user_profile.website}}</li>
+            <li class="collection-item"><b>User ID: </b>{{user_profile.userid}}</li> 
+        </ul>
+    </div>
+    
+    {% endif %}
+</main>  
+
+{% endblock 'mainbody' %} 
+{% block 'js' %} 
+<script> 
+</script>
+{% endblock 'js' %}     

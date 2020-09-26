@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block 'mainbody' %}
+
+<!-- RENDERER  -->
+<!-- RENDERER  -->
+<!-- RENDERER  -->
+
+    <!-- SECTION - Sidebar for medium and large screens --> 
+    
+    <!-- SECTION - Main Section -->
+    <main> 
+        <div class="row" style="padding-top: 0px !important;">   
+            <div id="col1" class="col s12 m9 l9 " style="padding: 0px 30px;"> <br>
+                <div id="ad1" class="grey lighten-1 ad" style="height: 120px;width: 100%;">ADS</div> 
+                <h3 style="font-weight: bold;" class="text ">{{article_heading}}</h3>
+
+                <!-- Integral Article -->
+                <!-- START FROM H4  -->
+                <!-- PAGE TITLE -->
+                
+                {% block 'engine' %} 
+                {% endblock 'engine' %}
+                
+
+            </div>
+            <!-- SECTION AD DISPLAY -->  
+            {% include "partials/root/ADS.html" %}
+        </div> 
+    </main> 
+
+
+
+    
+{% endblock 'mainbody' %}
+
+
+
+

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% block 'mainbody' %}
+<style>
+.statusgreen{
+    color:greenyellow
+}
+ul#statisticsdataul p{
+    line-height: 10px;
+}
+</style>
+    <!-- Setting UP ID -->
+<!-- SECTION - Sidebar for medium and large screens -->
+{% include "partials/root/sidebar.html" %}
+
+<!-- SECTION - USER PROFILE -->
+<main>
+    <!-- SECTION - USERID_AUTH -->
+    {% if user_profile.gender == '' %} 
+    {% include "partials/root/userprofilesetup/useridauth.html" %}
+    <!-- SECTION - PROFILE_CARD -->
+    {% else %} 
+    
+    <div class="z-depth-2" style="padding: 20px;">
+        
+    <div class="row grey-text text-darken-2" >
+        <div class="col m6 l6 s12 statcard" style="padding:0px 30px;">
+            <div class="z-depth-2 " style="height: 250px;padding:1px;border-radius:15px" >
+                <h4 style="text-align: center;">Configured Links</h4> 
+                 <h1 class="center" style="font-size: 120px;margin-top: 25px;"><b>54</b></h1>
+            </div>
+        </div> 
+        
+        
+        <div class="col m6 l6 s12 statcard"  style="padding:0px 30px;">
+            <div class="z-depth-2 " style="height: 250px;padding:1px;border-radius:15px " >
+                <h4 style="text-align: center;">Grabbed Links Packet</h4>
+                <!-- CONTENT -->
+                <div style="padding: 0px 5%;">
+                    <div style="margin: 0% !important;">
+                        <ul id="statisticsdataul">
+                            <p><i style="font-size: 17px;" class="material-icons orange-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                            <p><i style="font-size: 17px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                            <p><i style="font-size: 17px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                            <p><i style="font-size: 17px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                        </ul>
+                        </p>
+                    </div>  
+                </div>
+
+
+            </div>
+        </div> 
+        
+        
+          
+        <div class="col m6 l6 s12 statcard"  style="padding:20px 30px;">
+            <div class="z-depth-2 " style="height: 250px;padding:1px;border-radius:15px " >
+                <h4 style="text-align: center;">Traffic given back</h4>
+                
+
+                <!-- CONTENT -->
+                <div style="padding: 0px 5%;">
+                    <div style="margin: 0% !important;">
+                        <ul id="statisticsdataul">
+                            <p><i style="font-size: 17px;" class="material-icons orange-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                            <p><i style="font-size: 17px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                            <p><i style="font-size: 17px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                            <p><i style="font-size: 17px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                        </ul>
+                        </p>
+                    </div>  
+                </div>
+
+
+            </div>
+        </div> 
+        
+        
+          
+        <div class="col m6 l6 s12 statcard"  style="padding:20px 30px;">
+            <div class="z-depth-2 " style="height: 250px;padding:1px;border-radius:15px " >
+                <h4 style="text-align: center;">Remaining</h4>
+                 <!-- CONTENT -->
+                 <div style="padding: 0px 5%;">
+                    <div style="margin: 0% !important;">
+                        <ul id="statisticsdataul">
+                            <p><i style="font-size: 17px;" class="material-icons orange-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                            <p><i style="font-size: 17px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                            <p><i style="font-size: 17px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                            <p><i style="font-size: 17px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                        </ul>
+                        </p>
+                    </div>  
+                </div>
+            </div>
+        </div> 
+        
+    </div>
+    </div>
+
+
+    
+    {% endif %}
+</main>  
+
+{% endblock 'mainbody' %} 
+{% block 'js' %} 
+<script> 
+</script>
+{% endblock 'js' %}     
