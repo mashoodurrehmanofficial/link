@@ -24,9 +24,12 @@ from urllib import parse
  
 # print(urllib.parse.urlsplit('https://www.w3schools.com/bootstrap/bootstrap_ver.asp?username=ali/').query.split('=')[1])
  
-url='https://www.w3schools.com/bootstrap/bootstrap_ver.asp?username=ali/'
-data = urllib.parse.urlsplit(url)
-print(data.scheme+"://"+data.netloc+data.path)
+# url='https://www.w3schools.com/bootstrap/bootstrap_ver.asp?username=ali/'
+# data = urllib.parse.urlsplit(url)
+# print(data.scheme+"://"+data.netloc+data.path)
  
 # if url.endswith('/'):
 #     print(url[:-1])
+import requests
+
+print(requests.get('https://www.youtube.com/').status_code)

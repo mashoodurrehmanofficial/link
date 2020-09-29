@@ -160,9 +160,10 @@ document.getElementById('verifylink').addEventListener('click', function(){
 var y = new URL(weblink.value) 
 var resultatnID = ''
 if(y!='' || y!=undefined){
+
   $.ajax({
-    url:'/verifylink'  , 
-    data:{"link":weblink.value },
+    url:'/verifyweblinkandsubmit'  , 
+    data:{"link":String(y) },
     beforeSend: function () {
         $("#verifylink").html("Verifying Link . . .");
       },
@@ -176,18 +177,16 @@ if(y!='' || y!=undefined){
         $('#verifylink').hide() 
         $('#verifylinkform').append(`<div id="thumb_up" style="display: flex;justify-content: center;align-self:center;"><i  class="material-icons green-text large">thumb_up</i><br>`)
         $('#verifylinkform').append(`<br><div style="display: flex;justify-content: center;align-self:center;"><span id="generateid" class=" btn grey lighten-4 grey-text text-darken-4" style="pointer:default;text-transform: none;font-size: large;z-index:1;padding:0px 30px">Your ID is: `+y.hostname+`  </span></div>`)
-        $('#verifylinkform').append(`<br><div style="display: flex;justify-content: center;align-self:center;"><span id="submitID" class=" btn green" style="text-transform: none;font-size: large;z-index:1;padding:0px 30px"> Submit and get started </span></div>`)
+        $('#verifylinkform').append(`<br><div style="display: flex;justify-content: center;align-self:center;"><span id="submitID" class=" btn green" style="text-transform: none;font-size: large;z-index:1;padding:0px 30px"> Go to next Step </span></div>`)
        $('#submitID').click(function(){
-         $.ajax({
-           url: '/submitID',
-           data:{'website':y.host},
-           success:function(){
-             window.location='/dashboard'
-           }
-         })
+         window.location = '/dashboard'
        })
       
-      }else{alert("Please use Correct Link or check your Internet Connection !")};
+      }else if(data.status=='duplicate'){
+        alert("Web Address already taken !")
+      }else if(data.status=='invalid'){
+        alert("Link is invalid. Please use correct Link")
+        };
     }, 
     error:function(){
         alert("Please use Correct Link or check your Internet Connection !") 

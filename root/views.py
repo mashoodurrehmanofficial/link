@@ -120,21 +120,47 @@ def verifysentcode(request):
         return JsonResponse({"status":0})
 
 
+import urllib.parse
 
-
-def verifylink(request):
+def verifyweblinkandsubmit(request):
     link=request.GET['link'] 
+    analyzed_link = urllib.parse.urlsplit(link)
+    analyzed_linkforrequest = analyzed_link.scheme+"://"+analyzed_link.netloc
+    analyzed_linknetloc = analyzed_link.netloc
+    # CHECKING FOR DUPLICATES
+    AVALIABLE_NETLOCS = [x.website for x in Profile.objects.all()]
+    print(AVALIABLE_NETLOCS) 
     try:
-        status_code=requests.get(link).status_code
-    except:status_code=0
-    return JsonResponse({"status":status_code}) 
+        status_code=requests.get(analyzed_linkforrequest).status_code
+    except: 
+        print(0)
+        return JsonResponse({"status":'invalid'})
+    try:
+        # CHECKING VALIDNESS
+        
+        # CHECKING FOR DUPLICATE
+        if analyzed_linknetloc in AVALIABLE_NETLOCS:
+            print('duplicate')
+            return JsonResponse({"status":'duplicate'})
+        # REGISTERING WEBSITE 'LINK'
+        else:
+            print('avaliable') 
+            required_profile = Profile.objects.get(admin=request.user)
+            required_profile.website = analyzed_linknetloc
+            required_profile.userid = str(analyzed_linknetloc).replace('.','')
+            required_profile.save()
+            return JsonResponse({"status":status_code})
+        
+    except:
+        return JsonResponse({"status":'invalid'})
+    # required_profile = Profile.objects.get(website=analyzed_link.netloc)
+       
 
-def submitID(request): 
-    website=request.GET['website'] 
-    user_profile = Profile.objects.get(admin=request.user)
-    user_profile.userid = str(website).replace('.','')
-    user_profile.website = website
-    user_profile.save()
+    # website=request.GET['website'] 
+    # user_profile = Profile.objects.get(admin=request.user)
+    # user_profile.userid = str(website).replace('.','')
+    # user_profile.website = website
+    # user_profile.save()
     
     return redirect('dashboard') 
 
