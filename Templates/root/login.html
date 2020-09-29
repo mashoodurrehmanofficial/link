@@ -37,10 +37,10 @@
       <label for="password">Password</label>
     </div> 
     
-    <div >
+    <!-- <div >
       <div  class="g-recaptcha" data-sitekey="6LedltEZAAAAAKLub23SJYdH2ohBBQ35ldOXJHxp"  data-callback="verifyCaptcha"></div>
     <div id="g-recaptcha-error"></div>
-    </div>
+    </div> -->
 
   </div><br>
   
@@ -54,18 +54,18 @@
 </div>
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <script>
-function submitUserForm() {
-    var response = grecaptcha.getResponse();
-    if(response.length == 0) {
-        document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">This field is required.</span>';
-        return false;
-    }
-    return true;
-}
+// function submitUserForm() {
+//     var response = grecaptcha.getResponse();
+//     if(response.length == 0) {
+//         document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">This field is required.</span>';
+//         return false;
+//     }
+//     return true;
+// }
  
-function verifyCaptcha() {
-    document.getElementById('g-recaptcha-error').innerHTML = '';
-}
+// function verifyCaptcha() {
+//     document.getElementById('g-recaptcha-error').innerHTML = '';
+// }
 </script>
 
 {% endblock %}

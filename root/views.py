@@ -20,6 +20,7 @@ def register(request):
         password = request.POST['password']
         new_user = User.objects.create_user(username=name,password=password,email=email)
         new_user.save()
+        Profile.objects.create(admin=new_user)
         return redirect('login')
     else:
         return render(request, 'root/register.html')
@@ -31,18 +32,18 @@ def user_login(request):
     if request.method == 'POST':
       username = request.POST['name']
       password = request.POST['password']
-      try:
-        captcha_token=request.POST.get("g-recaptcha-response")
-        cap_url="https://www.google.com/recaptcha/api/siteverify"
-        cap_secret="6LedltEZAAAAAChfcWQ1cPIQS1OM0iUm7YFDPsjS"
-        cap_data={"secret":cap_secret,"response":captcha_token}
-        cap_server_response=requests.post(url=cap_url,data=cap_data)
-        cap_json=json.loads(cap_server_response.text)
-        print(cap_json)
-        if cap_json['success']==False:
-            return HttpResponseRedirect("/")
-      except:
-          return redirect('login')
+    #   try:
+    #     captcha_token=request.POST.get("g-recaptcha-response")
+    #     cap_url="https://www.google.com/recaptcha/api/siteverify"
+    #     cap_secret="6LedltEZAAAAAChfcWQ1cPIQS1OM0iUm7YFDPsjS"
+    #     cap_data={"secret":cap_secret,"response":captcha_token}
+    #     cap_server_response=requests.post(url=cap_url,data=cap_data)
+    #     cap_json=json.loads(cap_server_response.text)
+    #     print(cap_json)
+    #     if cap_json['success']==False:
+    #         return HttpResponseRedirect("/")
+    #   except:
+    #       return redirect('login')
     
     
       user = authenticate(username=username, password=password)
@@ -126,7 +127,9 @@ def verifylink(request):
     link=request.GET['link'] 
     try:
         status_code=requests.get(link).status_code
-    except:status_code=0
+    except:
+        print(0)
+        pass
     return JsonResponse({"status":status_code}) 
 
 def submitID(request): 

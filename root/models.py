@@ -24,9 +24,9 @@ class Profile(models.Model):
         return self.admin.username
     
     
-@receiver(post_save, sender=User)
-def create_profile(sender,instance,**kwargs):
-    Profile.objects.get_or_create(admin=instance)
+# @receiver(post_save, sender=User)
+# def create_profile(sender,instance,**kwargs):
+#     Profile.objects.get_or_create(admin=instance)
     
 class EmailVerification(models.Model):
     email = models.EmailField(max_length=100, unique=True)
