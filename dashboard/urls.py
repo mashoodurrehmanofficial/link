@@ -12,6 +12,8 @@ urlpatterns = [
     path('claimtraffic/', claimtraffic, name='claimtraffic'),
     path('configureurls/', configureurls, name='configureurls'), 
     path('statistics/', statistics, name='statistics'), 
+    path('testurls/', testurls, name='testurls'),  
+    path('registermyvisit/', registermyvisit, name='registermyvisit'),  
        
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

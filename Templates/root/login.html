@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
 {% block 'mainbody' %}
-
-
+<style>
+  .g-recaptcha {
+    transform:scale(0.9);transform-origin:0;-webkit-transform:scale(0.9);
+  transform:scale(0.9);-webkit-transform-origin:0 0;transform-origin:0 0
+  }
+  @media only screen and (max-width: 700px){
+    .g-recaptcha{
+      transform:scale(0.75);transform-origin:0;-webkit-transform:scale(0.75);
+  transform:scale(0.75);-webkit-transform-origin:0 0;transform-origin:0 0
+  } 
+  }
+</style>
+{% include "partials/root/sidebar.html" %}
 
  <br><br><br>
 <div class="container">
@@ -9,21 +20,31 @@
 <div class="container">
 <div class="container">
 
-<form action="" method="post" class=" card-panel grey lighten-5" style="position: relative;">{% csrf_token %}
-  <i class="material-icons green-text" style="font-size:90px;position: absolute;top:-45px;right: 35%;">security</i>
+<form action="" method="post" class=" card-panel grey lighten-5" style="position: relative;"  onsubmit="return submitUserForm();">{% csrf_token %}
+  
+  <h4 id="statrelativetitle" class="gradient1 center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-4px;left: 50px;right: 50px;padding: 5px 0px;">
+    <i class="material-icons ">security </i> Login
+  </h4>
+  
   <div><br> 
     <div class="input-field">
-      <input name="name" id="name" type="text" class="validate">
+      <input name="name" id="name" type="text" class="validate" required>
       <label for="name">Username</label>
     </div>  
   
     <div class="input-field">
-      <input name="password" id="password" type="text" class="validate">
+      <input name="password" id="password" type="text" class="validate" required>
       <label for="password">Password</label>
     </div> 
+    
+    <div >
+      <div  class="g-recaptcha" data-sitekey="6LedltEZAAAAAKLub23SJYdH2ohBBQ35ldOXJHxp"  data-callback="verifyCaptcha"></div>
+    <div id="g-recaptcha-error"></div>
+    </div>
+
   </div><br>
   
-  <input type="submit" value="    Login    " class="btn green">
+  <input type="submit" style="width: 100%;" value="  Login  " class="btn gradient1">
 </form>
   
 
@@ -31,6 +52,20 @@
 </div>
 </div>
 </div>
-
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script>
+function submitUserForm() {
+    var response = grecaptcha.getResponse();
+    if(response.length == 0) {
+        document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">This field is required.</span>';
+        return false;
+    }
+    return true;
+}
+ 
+function verifyCaptcha() {
+    document.getElementById('g-recaptcha-error').innerHTML = '';
+}
+</script>
 
 {% endblock %}

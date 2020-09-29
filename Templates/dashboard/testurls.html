@@ -1,0 +1,66 @@
+
+{% extends 'base.html' %}
+{% block 'mainbody' %}
+<!-- Setting UP ID -->
+<!-- SECTION - Sidebar for medium and large screens -->
+{% include "partials/root/sidebar.html" %}
+<!-- SECTION - USER PROFILE -->
+<main>
+    <!-- SECTION - USERID_AUTH -->
+    {% if user_profile.gender == '' %} 
+    {% include "partials/root/userprofilesetup/useridauth.html" %}
+    <!-- SECTION - PROFILE_CARD -->
+    {% else %} 
+    <br><br>
+    <form style="margin: 0px 15px;"> 
+        <input type="text" name="visited_link" id="visited_link"> <br><br>
+        <input type="text" name="username" id="username"> <br><br>
+        <button class="btn">Register my Visit</button>
+    </form>
+    
+
+
+    {% endif %}
+</main>  
+{% endblock 'mainbody' %} 
+{% block 'js' %}    
+<script> 
+  
+  var ip = ''
+  var country = ''
+  $.get('https://json.geoiplookup.io/', function(data) {
+    ip = data.ip
+    country = data.country_name
+})
+
+    $('form').submit(function(event){ 
+        event.preventDefault()
+        text = $('#visited_link').val() 
+        username = $('#username').val() 
+        url = new URL(text)  
+        $.ajax({
+            url:'/dashboard/registermyvisit',
+            data:{'visited_link':text,'username':username,'ip':ip,'country':country},
+            success:function(data){
+                // alert(data.data)
+            }
+        })
+        
+      
+     
+        
+        // alert(url.searchParams.get('username')) 
+    })
+    url = new URL(window.location.href)
+    var ip = url.searchParams.get('ip')
+    var userid = url.searchParams.get('userid')
+    var link = window.location.origin+window.location.pathname
+    // $.ajax({
+    //     url:'sessioncompleted', 
+    //     data:{"ip":ip,"userid":userid,"link":link},
+    //     success:function(data){
+    //     console.log(data);
+    //     }
+    // })
+    </script>
+{% endblock 'js' %}     

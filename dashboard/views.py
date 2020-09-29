@@ -7,15 +7,11 @@ from django.core.mail import send_mail
 from root.models import *
 from .models import *
 import requests,time,random,uuid
+from datetime import  datetime
 # Create your views here. 
 
 
-
-def grabandpostlinks(request):
-    return render(request, 'dashboard/grabandpostlinks.html')
-
-
-
+ 
 
 
 # Create your views here.
@@ -33,7 +29,7 @@ def dashboard(request):
         'alloted_links':alloted_links,
         'counting':counting,
         'title':'Dashboard'
-    }
+    } 
     return render(request, 'dashboard/grablinks.html',context)
 
 
@@ -71,33 +67,42 @@ from django.forms.models import model_to_dict
 def statistics(request):  
     user_profile = Profile.objects.get(admin=request.user)
     user_urls = UserUrlssRepository.objects.filter(admin=request.user).order_by('-id')
+    total_configured_urls = UserUrlssRepository.objects.filter(admin=request.user).count()  
+    # current_packet = CurrentPacket
+    context={
+        'user_urls':user_urls,
+        'user_profile':user_profile,
+        'title':'Dashboard',
+        'total_configured_urls':total_configured_urls
+    }
+    return render(request, 'dashboard/statistics.html',context)
+  
+
+# testurls
+@login_required(login_url='/login')
+def testurls(request):  
+    user_profile = Profile.objects.get(admin=request.user)
+    user_urls = UserUrlssRepository.objects.filter(admin=request.user).order_by('-id')
     context={
         'user_urls':user_urls,
         'user_profile':user_profile,
         'title':'Dashboard'
     }
-    return render(request, 'dashboard/statistics.html',context)
+    return render(request, 'dashboard/testurls.html',context)
   
 
 
+
+from .linkpacketallocation import linkpackallocation
 def grablinkspacket(request):
-    required_profile=Profile.objects.get(admin=request.user)
-    if required_profile.current_packet_completed: 
-        print("Deleting previous Allocations")
-        CurrentPacket.objects.filter(admin=request.user).delete()
-        print('Performing link allocation')
-        # capacity = request.GET['capacity'] 
-        packetID=uuid.uuid4() 
-        alloted_links = [x.submitted_url for x in UserUrlssRepository.objects.all()] 
-        required_profile=Profile.objects.get(admin=request.user)
-        required_profile.current_packet_completed=False
-        required_profile.current_packetID=packetID
-        required_profile.current_packetlength=len(alloted_links)
-        required_profile.save()
-        CurrentPacket.objects.bulk_create(
-            [CurrentPacket(grabbedlink=x, packetlength=len(alloted_links),packetID=packetID, admin=request.user) for x in alloted_links]
-        )
-        print('Allocation completed !')
-        return JsonResponse({'alloted':True,'alloted_links':alloted_links})
-    else:
-        return JsonResponse({'alloted':False,'alloted_links':[0]})
+    alloted_links = linkpackallocation(request)
+    return JsonResponse({'alloted':True,'alloted_links':alloted_links})
+    # else:
+    #     return JsonResponse({'alloted':False,'alloted_links':[0]})
+    
+ 
+from .bidirectionalvisitregistry import  bidirectionalvisitregistry
+def registermyvisit(request): 
+    bidirectionalvisitregistry(request)
+    return JsonResponse({'data':12})
+    

@@ -1,10 +1,12 @@
-{% extends 'base.html' %}v  
-{% block 'mainbody' %}
-    {{user}}
+{% extends 'base.html' %}
+{% block 'mainbody' %} 
+
+
+{% include "partials/root/sidebar.html" %}
+
+
 {% endblock 'mainbody' %} 
-
-
-{% block 'js' %}
+{% block 'js' %}     
 <script>
 url = new URL(window.location.href)
 var ip = url.searchParams.get('ip')

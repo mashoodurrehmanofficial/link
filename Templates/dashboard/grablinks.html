@@ -14,14 +14,14 @@
     <br><br>
     <div style="position: relative" >
         <div class="" style="position: relative;">
-        <div class="" style="position: relative;margin: 0px 20px;">
+        <div id="marginkeeper" class="" style="position: relative;margin: 0px 20px;">
           <div class=" card-panel  " style="margin: 0px;padding-left: 0px; padding-right: 0px;">
             <!-- BOX HEADING -->
             
             {% if user_profile.current_packet_completed %}
-            <span id="grabpackettitle" class="gradient1 center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-30px;left: 50px;right: 50px;padding: 5px 10px;">Grab Links Packet</span>
+            <span id="relativetitle" class="gradient1 center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-30px;left: 50px;right: 50px;padding: 5px 10px;">Grab Links Packet</span>
             {% else %}
-            <span class="gradient1 center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-30px;left: 50px;right: 50px;padding: 5px 10px;">Complete Links Packet</span>
+            <span id="relativetitle" class="gradient1 center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-30px;left: 50px;right: 50px;padding: 5px 10px;">Complete Links Packet</span>
             {% endif %}
             
             <br>    
@@ -34,7 +34,8 @@
                 <form id="grabpacketform" style="padding: 0px 20px !important;">
                     <div class="input-field" style="width: 200px;">
                         <select> 
-                        <option style="color: red !important;" value="5">5</option>
+                        <option value="" disabled selected>Choose amount of links</option>
+                        <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="15">15</option>
                         </select>
@@ -45,7 +46,7 @@
                     </div> 
                 </form> 
                 </div>
-                <!-- END GRAB LINK FORM -->
+                <!-- END GRAB LINKs FORM -->
             {% else %} 
                 <!-- SECTION NO.2  DISPLAYING LINKS PACKET -->
                 <!-- GRAB LINKS FORM -->
@@ -53,17 +54,17 @@
                 {% for alloted_link in alloted_links %} 
                     <!-- FOR VISITED LIKNS -->
                     {% if alloted_link.visited %}
-                        <div class="grey lighten-5 ">
-                            <p class="green accent-4 "  style="padding: 0%;padding-left: 5px;display: block;font-size: 10vw;padding: 8px 15px 8px 20px;" >
-                                <a href="{{alloted_link.grabbedlink}}" class="white-text" target="_blank">{{alloted_link.grabbedlink}}</a>   
-                            </p>
-                            <div class="divider" style="margin-top: 0px !important;"></div>   
-                        </div>
+                    <div class="grey lighten-5 ">
+                        <span class="green accent-4"  id="alloted_link_span" style="padding: 0%;padding-left: 5px;display: block;font-size: 16px;padding: 8px 15px 8px 20px;" >
+                            <a  id="alloted_link" class="white-text" href="{{alloted_link.grabbedlink}}"  target="_blank">{{alloted_link.grabbedlink}}</a>   
+                        </span>
+                        <div class="divider" style="margin-top: 0px !important;"></div>   
+                    </div>
                     <!-- FOR PENDING LINKS -->
                     {% else %}
                       <div class="grey lighten-5 ">
-                            <span class="sidebaritems  " id="sidebaritems" style="padding: 0%;padding-left: 5px;display: block;font-size: 16px;padding: 8px 15px 8px 20px;" >
-                                <a href="{{alloted_link.grabbedlink}}"  target="_blank">{{alloted_link.grabbedlink}}</a>   
+                            <span class="alloted_link_span  " id="alloted_link_span" style="padding: 0%;padding-left: 5px;display: block;font-size: 16px;padding: 8px 15px 8px 20px;" >
+                                <a id="alloted_link" href="{{alloted_link.grabbedlink}}"  target="_blank">{{alloted_link.grabbedlink}}</a>   
                             </span>
                             <div class="divider" style="margin-top: 0px !important;"></div>   
                         </div>
@@ -74,13 +75,13 @@
                 </div>
 
             {% endif %} 
+            
             <div id="grabbedlinks"> 
-
-
+ 
+            </div> 
           </div>
         </div>
         </div>
-    </div>
     </div>
 
    
@@ -99,7 +100,8 @@ $('select').change(function(){
 })
 $('#grabpacketform').submit(function(event){
     event.preventDefault()
-    $.ajax({
+    if(!capacity<1){ 
+        $.ajax({
         url:'/dashboard/grablinkspacket',
         data:{'capacity':capacity},
         success:function(data){
@@ -108,20 +110,25 @@ $('#grabpacketform').submit(function(event){
                 $('#grabbedlinks').append(` 
                 <div class="divider" style="margin-top: 0px !important;"></div> 
                 <div class="grey lighten-5 ">
-                  <span class="sidebaritems" id="sidebaritems" style="padding: 0%;padding-left: 5px;display: block;font-size: 16px;padding: 8px 15px 8px 20px;" >
-                        <a href="${data.alloted_links[y]}" >${y+1} ${data.alloted_links[y]}</a>   
+                    <span class="alloted_link_span  " id="alloted_link_span" style="padding: 0%;padding-left: 5px;display: block;font-size: 16px;padding: 8px 15px 8px 20px;" >
+                        <a id="alloted_link" href="${data.alloted_links[y]}" >${y+1} ${data.alloted_links[y]}</a>   
                     </span>
                         <div class="divider" style="margin-top: 0px !important;"></div>   
                 </div>  
                 `) 
                 $('#grabpacketdiv').hide()
-                $('#grabpackettitle').html('Complete Links Packet')
+                $('#relativetitle').html('Complete Links Packet')
             }
             }else if(data.alloted==false){
                 alert("Please complete you's current Link Packet to grab more.")
             }
         }
     })
+    }else{
+        alert("Please select any amount of links")
+    }
 })
 </script>
 {% endblock 'js' %}     
+
+ 

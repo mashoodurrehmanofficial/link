@@ -1,8 +1,19 @@
 {% extends 'base.html' %}
 {% block 'mainbody' %}
 
-
-
+<style>
+  .g-recaptcha {
+    transform:scale(0.8);transform-origin:0;-webkit-transform:scale(0.8);
+  transform:scale(0.8);-webkit-transform-origin:0 0;transform-origin:0 0
+  }
+  @media only screen and (max-width: 700px){
+    .g-recaptcha{
+      transform:scale(0.75);transform-origin:0;-webkit-transform:scale(0.75);
+  transform:scale(0.75);-webkit-transform-origin:0 0;transform-origin:0 0
+  } 
+  }
+  </style>
+{% include "partials/root/sidebar.html" %}
  <br><br><br>
 <div class="container">
 <div class="container">
@@ -10,29 +21,35 @@
 <div class="container">
 
 <form action="" method="post" class=" card-panel grey lighten-5" style="position: relative;">{% csrf_token %}
-  <div class="green" style="position: absolute;padding:20px 23px 20px 23px;top:-50px;left: 33.5%;border-radius: 50%;"><i class="material-icons white-text" style="font-size: 50px;">person_add</i></div>
+  <br>
+  <h4 id="statrelativetitle" class="gradient1 center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-4px;left: 50px;right: 50px;padding: 5px 0px;">
+    <i class="material-icons ">person_add </i> Register
+  </h4>
   <div style="margin-top: 8px;"> 
     <div class="input-field">
-      <input name="name" id="name" type="text" class="validate">
+      <input name="name" id="name" type="text" class="validate" required>
       <label for="name">Username</label>
     </div> 
   
   
     <div class="input-field">
-      <input name="email" id="email" type="text" class="validate">
+      <input name="email" id="email" type="text" class="validate" required>
       <label for="email">Email</label>
     </div> 
     <div class="input-field">
-      <input name="password" id="password" type="text" class="validate">
+      <input name="password" id="password" type="text" class="validate" required>
       <label for="password">Password</label>
     </div>  
-
-
-
+    
+    
+    <div >
+      <div  class="g-recaptcha" data-sitekey="6LedltEZAAAAAKLub23SJYdH2ohBBQ35ldOXJHxp"  data-callback="verifyCaptcha"></div>
+    <div id="g-recaptcha-error"></div>
+    </div>
 
   </div><br>
   
-  <input type="submit" value="  Register  " class="btn green">
+  <input type="submit" style="width: 100%;" value="  Register  " class="btn gradient1">
 </form>
   
 

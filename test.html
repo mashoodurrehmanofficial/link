@@ -1,17 +1,120 @@
 <html lang="en">
-<head>
-        <!-- Compiled and minified CSS -->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"><link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <title>Document</title>
+<style>
+main{
+    margin-left: 256px;
+}
+@media only screen and (max-width : 890px) {
+    main{margin-left: 0px !important;}
+}
+.statcard{
+    position: relative;
+    margin-bottom: 20px;
+}
+h4{
+    position: absolute;top:-30px;left: 50px;right: 50px;padding: 5px 10px;
+    background-color: greenyellow;
+}
+@media only screen and (max-width : 500px) {
+      #relativetitle{font-size: 18px !important;top: -21px !important}
+      #alloted_link_span{padding-left:10px !important;white-space: nowrap;
+      /* word-wrap: break-word;  */ 
+  overflow: hidden;
+  text-overflow: ellipsis;}
+      #marginkeeper{margin:0px 10px !important;}
+      #alloted_link{font-size: 15px !important;padding-right: px !important;box-sizing: border-box;
+        
+      }
+
+  }
+</style>
 </head>
 <body>
-    <div class="grey lighten-5 ">
-        <span class="sidebaritems  " id="sidebaritems" style="padding: 0%;padding-left: 5px;display: block;font-size: 5 w;padding: 8px 15px 8px 20px;" >
-            <a   target="_blank">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis, magnam?</a>   
-        </span>
-        <div class="divider" style="margin-top: 0px !important;"></div>   
+     
+
+  <main>
+    <div class="row grey-text text-darken-2" >
+        <div class="col m6 l6 s12 statcard" style="padding:0px 30px;">
+            <div class="z-depth-2 " style="height: 250px;padding:1px;border-radius:15px" >
+                <h4 style="text-align: center">Configured Links</h4> 
+                 <h1 class="center" style="font-size: 120px;margin-top: 25px;"><b>31</b></h1>
+            </div>
+        </div> 
+        
+        
+        <div class="col m6 l6 s12 statcard"  style="padding:0px 30px;">
+            <div class="z-depth-2 " style="height: 250px;padding:1px;border-radius:15px; " >
+                <h4  style="text-align: center">Current Packet</h4>
+                <!-- CONTENT -->
+                <div style="padding: 0px 5%;"> 
+                    <div style="margin: 0% !important;">
+                        <ul id="statisticsdataul">
+                            <p style="font-size: 15px;"><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> ID:4543-756232-4-r43fsd434-3454sw</p>
+                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Completeion: 6 out of 55</p>
+                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Creation Date: 32</p>
+                            
+                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Status: Completed</p>
+                        
+                                
+                        </ul>
+                        </p>
+                    </div>  
+                </div>
+
+
+            </div>
+        </div> 
+        
+         
+        <div class="col m6 l6 s12 statcard"  style="padding:20px 30px;">  
+            <div class="z-depth-2 " style="height: 250px;padding:1px;border-radius:15px " >
+                <h4 style="text-align: center">Traffic Status</h4>
+                
+
+                <!-- CONTENT -->  
+                <div style="padding: 0px 5%;">
+                    <div style="margin: 0% !important;">
+                        <ul id="statisticsdataul">
+                            <p><i style="font-size: 15px;" class="material-icons orange-text ">stop_circle</i> Total successful visits by you: 43</p>
+                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Total claimed traffic: 140</p>
+                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Total visits returned back: 89</p>
+                            <!-- <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p> -->
+                        </ul>
+                        </p>
+                    </div>  
+                </div>
+
+
+            </div>
+        </div> 
+        
+        
+          
+        <div class="col m6 l6 s12 statcard"  style="padding:20px 30px;">  
+            <div class="z-depth-2 " style="height: 250px;padding:1px;border-radius:15px; " >
+                <h4  style="text-align: center;">Remaining</h4>
+                 <!-- CONTENT --> 
+                 <div style="padding: 0px 5%;"> 
+                    <div style="margin: 0% !important;">
+                        <ul id="statisticsdataul">
+                            <p><i style="font-size: 15px;" class="material-icons orange-text ">stop_circle</i> Total reserved tokens: 32</p>
+                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Total Links in Queue: 43</p>
+                            <!-- <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
+                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p> -->
+                           
+                        </ul>
+                        </p>
+                    </div>  
+                </div>
+            </div>
+        </div> 
+        
     </div>
+
+  </main>
+
+<script>  
+</script>
 </body>
 </html>

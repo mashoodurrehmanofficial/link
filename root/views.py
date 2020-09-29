@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponseRedirect
 from django.http import JsonResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout  
@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
 from .models import *
 import requests,time,random,uuid
+import urllib.parse,requests,json
 # Create your views here.
 # INDEX PAGE
 def index(request):
@@ -25,9 +26,25 @@ def register(request):
 
 # LOGIN PAGE
 def user_login(request): 
+    if request.user.is_authenticated:
+      return  redirect('/')
     if request.method == 'POST':
       username = request.POST['name']
       password = request.POST['password']
+      try:
+        captcha_token=request.POST.get("g-recaptcha-response")
+        cap_url="https://www.google.com/recaptcha/api/siteverify"
+        cap_secret="6LedltEZAAAAAChfcWQ1cPIQS1OM0iUm7YFDPsjS"
+        cap_data={"secret":cap_secret,"response":captcha_token}
+        cap_server_response=requests.post(url=cap_url,data=cap_data)
+        cap_json=json.loads(cap_server_response.text)
+        print(cap_json)
+        if cap_json['success']==False:
+            return HttpResponseRedirect("/")
+      except:
+          return redirect('login')
+    
+    
       user = authenticate(username=username, password=password)
       if user is not None: 
         login(request, user)
@@ -152,13 +169,19 @@ def profile(request):
         
 
 def verifyandsubmiturl(request):  
-    titletosubmit = request.GET['title']
-    urltosubmit = request.GET['url'] 
+    titletosubmit = request.GET['title'] 
+    urltosubmit = urllib.parse.urlsplit(request.GET['url'] )
+    urltosubmit = urltosubmit.scheme+"://"+urltosubmit.netloc+urltosubmit.path
+    
+    print(urltosubmit)
     status_code=requests.get(urltosubmit).status_code 
     reqired_profile=Profile.objects.get(admin=request.user)
     if str(reqired_profile.website) in str(urltosubmit) and status_code==200:
         try:
+            print('_______________')
+            print(urltosubmit)
             x = UserUrlssRepository.objects.get(submitted_url=urltosubmit)
+            print('_______________')
             return JsonResponse({"statusduplicate":1}) 
         except :
             UserUrlssRepository.objects.create(title=titletosubmit,submitted_url=urltosubmit,admin=request.user)
