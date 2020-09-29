@@ -20,7 +20,6 @@ def register(request):
         password = request.POST['password']
         new_user = User.objects.create_user(username=name,password=password,email=email)
         new_user.save()
-        Profile.objects.create(admin=new_user)
         return redirect('login')
     else:
         return render(request, 'root/register.html')
@@ -127,9 +126,7 @@ def verifylink(request):
     link=request.GET['link'] 
     try:
         status_code=requests.get(link).status_code
-    except:
-        print(0)
-        pass
+    except:status_code=0
     return JsonResponse({"status":status_code}) 
 
 def submitID(request): 

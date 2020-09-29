@@ -7,8 +7,8 @@ from datetime import datetime
 # Create your models here.
 class Profile(models.Model):
     email_verified = models.BooleanField(default=True)
-    userid = models.CharField(max_length=100,unique=True)
-    website = models.CharField(max_length=100, unique=True) 
+    userid = models.CharField(max_length=100,unique=True,blank=True)
+    website = models.CharField(max_length=100, unique=True, blank=True) 
     gender = models.CharField(max_length=6,default='',blank=True)  
     admin = models.OneToOneField(User,on_delete=models.CASCADE, primary_key=True)
     current_packetID = models.CharField(max_length=100, blank=True)
@@ -24,9 +24,9 @@ class Profile(models.Model):
         return self.admin.username
     
     
-# @receiver(post_save, sender=User)
-# def create_profile(sender,instance,**kwargs):
-#     Profile.objects.get_or_create(admin=instance)
+@receiver(post_save, sender=User)
+def create_profile(sender,instance,**kwargs):
+    Profile.objects.get_or_create(admin=instance)
     
 class EmailVerification(models.Model):
     email = models.EmailField(max_length=100, unique=True)
