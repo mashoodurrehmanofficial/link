@@ -56,6 +56,20 @@
       
       } 
   }
+     
+  @media only screen and (max-width : 500px) {
+    .claimlinkresponsive{
+      overflow: hidden;
+      white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis; 
+    width: 100%;
+    }
+  }
+
+
+
+
 
   @media only screen and (max-width : 900px) {
     #statrelativetitle{top: -18px !important;}
@@ -69,6 +83,13 @@
   text-overflow: ellipsis;
     }
   }
+
+
+
+
+
+
+
   #statrelativetitle{top: -18px !important;}
     .statcontentconfiguredlinks{padding-top: 40px;}
     .statcard{padding:0px 8px !important;margin-bottom: 40px !important;}
@@ -155,9 +176,10 @@ background-image: linear-gradient(315deg, #06bcfb 0%, #4884ee 74%);;color:floral
   </div>   <br> -->
 
   
-<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<!-- <script src="https://www.google.com/recaptcha/api.js" async defer></script> -->
 <script src="{{ STATIC_URL }}/Static/javascript/jquery.js"></script>  
 <script src="{{ STATIC_URL }}/Static/javascript/responsive.js"></script>   
+<script src="{{ STATIC_URL }}/Static/javascript/sweetalert.js"></script>
 {% block 'js' %}
 {% endblock 'js' %}
 <script>
@@ -215,17 +237,17 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
         // Broadcast that you're opening a page.
-        localStorage.openpages = Date.now();
-        var onLocalStorageEvent = function(e){
-            if(e.key == "openpages"){
-                // Listen if anybody else is opening the same page!
-                localStorage.page_available = Date.now();
-            }
-            if(e.key == "page_available" && window.location.href=='http://localhost:8000/dashboard/'){ 
-                $('body').html(`<H2>Dear <u>{{ user}} </u> you can't open DASHBOARD PAGE TWICE</H2>`)
-            }
-        };
-        window.addEventListener('storage', onLocalStorageEvent, false);
+        // localStorage.openpages = Date.now();
+        // var onLocalStorageEvent = function(e){
+        //     if(e.key == "openpages"){
+        //         // Listen if anybody else is opening the same page!
+        //         localStorage.page_available = Date.now();
+        //     }
+        //     if(e.key == "page_available" && window.location.href=='http://localhost:8000/dashboard/'){ 
+        //         $('body').html(`<H2>Dear <u>{{ user}} </u> you can't open DASHBOARD PAGE TWICE</H2>`)
+        //     }
+        // };
+        // window.addEventListener('storage', onLocalStorageEvent, false);
 
 </script>
    </body>

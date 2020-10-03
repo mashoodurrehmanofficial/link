@@ -30,6 +30,16 @@ from urllib import parse
  
 # if url.endswith('/'):
 #     print(url[:-1])
-import requests
 
-print(requests.get('https://www.youtube.com/').status_code)
+# import math
+# a = len([1,2,3,4])
+# b = len([1,2,3,4])
+# x=math.isclose(b,a, abs_tol=7)
+
+# y=math.isclose(a, b, abs_tol=2)
+# print(x,y)
+import datetime
+
+x=1
+++x
+print(x)

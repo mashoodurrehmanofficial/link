@@ -16,11 +16,11 @@
       <div class="modal-content">
           <form id="verifysubmiturlform"  >
               <div class="input-field ">
-                  <input id="title" type="text" name="title" class="validate">
+                  <input id="title" type="text" name="title" class="validate" required>
                   <label for="title">Enter title of Url</label>
                 </div>
                 <div class="input-field ">
-                  <input id="url" name="url" type="text" class="validate">
+                  <input id="url" name="url" type="text" class="validate" required>
                   <label for="url">Enter Url</label>
                 </div>
               
@@ -74,7 +74,7 @@
 
 
 
-                <button id="verifysubmiturl" class="btn">Verify and Submit</button>
+                <button id="verifysubmiturl" class="btn gradient1">Verify and Submit</button>
           </form>
 
 
@@ -91,7 +91,7 @@
     {% for user_url in user_urls %}
       <div  class="grey lighten-5 {{user_url.id}}">
           <span class="sidebaritems" id=" " style="padding: 0%;padding-left: 5px;display: block;font-size: 16px;padding: 5px 15px 5px 20px;" >
-              <a href="{{user_url.submitted_url}}" >{{user_url.title|truncatechars:30}} </a>  
+              <a href="{{user_url.submitted_url}}" >{{user_url.title}} </a>  
               <!-- DROPDOWN ACTIVATOR -->
               <i data-target='{{user_url.id}}' style="cursor: pointer;font-size: 20px;" class="material-icons dropdown-trigger  circle grey-text right" >more_horiz</i>
           </span>
@@ -184,18 +184,19 @@ document.getElementById('verifysubmiturlform').addEventListener('submit',functio
                 </div> 
                 `)  
             }else if(data.statusduplicate==1){
-              alert("URL already exists !")
+              swal("Sorry !", "URL already exists !", "warning"); 
               $('#loader').hide()
               $('#verifysubmiturl').show()
 
             }
             else if(data.statuserror==0){
-                alert("Please check your url or Internet Connection !")
+              swal("Sorry !", "Please check your url or Internet Connection !", "error"); 
+                
                 $('#verifysubmiturl').show()
                 $('#loader').hide()
                 }
         },
-        error: function(){alert("Please check your Internet Connection !")}
+        error: function(){swal("So6rry !","Please check your Internet Connection !","error")}
     })
     // }else{
     //   alert("Please correct your URL !")

@@ -172,14 +172,14 @@ def sessioncompleted(request):
 
 def personalinfo(request): 
     user_profile = Profile.objects.get(admin=request.user)
-    if 'male' in request.GET:
+    gender = request.GET['gender']
+    if gender=='Male': 
         user_profile.gender='Male'
         user_profile.save()
-    else:
+    else: 
         user_profile.gender='Female'
         user_profile.save()
-    print(1)
-    return redirect('dashboard')
+    return JsonResponse({'dashboard':1})
         
 
 

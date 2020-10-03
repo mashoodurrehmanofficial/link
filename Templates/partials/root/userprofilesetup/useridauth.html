@@ -56,7 +56,7 @@
         </div>
 <!-- END PRELOADER -->
         <div id="emailcodediv" class="input-field" style="display: none;">
-          <input name="emailcode" id="emailcode" type="text" class="validate">
+          <input name="emailcode" id="emailcode" type="text" class="validate" required>
           <label for="emailcode">Enter Code sent to your Email</label>
         </div>   <br>
       <span id="sendcode" class="green btn" style="text-transform: none;width: 100%;font-size: large;">Send Code </span>
@@ -101,7 +101,7 @@ document.getElementById('sendcode').addEventListener('click', function(){
           })
       })
       }else{
-        alert("There was an error")
+        swal('Sorry !',"There was an error", 'warning')
       }
     }
   })
@@ -147,7 +147,7 @@ document.getElementById('sendcode').addEventListener('click', function(){
     <br>
     <br>
       <div id="weblinkdiv" class="input-field">
-        <input name="weblink" id="weblink" type="text" class="validate">
+        <input name="weblink" id="weblink" type="text" class="validate" required>
         <label for="weblink">Enter website link  e.g www.example.com</label>
       </div>   
     <span id="verifylink" class="green btn" style="text-transform: none;width: 100%;font-size: large;">Verify Link </span>
@@ -183,13 +183,14 @@ if(y!='' || y!=undefined){
        })
       
       }else if(data.status=='duplicate'){
-        alert("Web Address already taken !")
+        swal('Sorry !',"Web Address already taken !" , 'warning') 
       }else if(data.status=='invalid'){
-        alert("Link is invalid. Please use correct Link")
-        };
+        swal('Sorry !',"Link is invalid. Please use correct Link" , 'error')
+      };
     }, 
     error:function(){
-        alert("Please use Correct Link or check your Internet Connection !") 
+      swal('Sorry !',"Please use Correct Link or check your Internet Connection !" , 'error')
+         
 
     }
   })
@@ -217,21 +218,21 @@ if(y!='' || y!=undefined){
     <div id="verifyemaildiv"class=" card-panel grey lighten-5" style="margin: 0px;">
       <span class="green center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-30px;left: 50px;right: 50px;padding: 5px 10px;">Setup your Info</span>
         
-       <form action="/personalinfo">
+       <form id="form">
         <p >
           <label>
-            <input class="with-gap red" name="male" type="radio"  />
+            <input class="with-gap red" value="Male" name="group1" type="radio"  />
             <span>Male</span>
           </label>
         </p>
         <p>
           <label>
-            <input class="with-gap" name="female" type="radio"  />
+            <input class="with-gap"   name="group1"  value="Female" type="radio"  />
             <span>Female</span>
           </label>
         </p> 
         <br>
-        <button type="submit" id="sendcode" class="green btn" style="text-transform: none;width: 100%;font-size: large;">Submit</button>
+        <button type="submit" id="submit" class="green btn" style="text-transform: none;width: 100%;font-size: large;">Submit</button>
        
        </form>
 
@@ -239,11 +240,29 @@ if(y!='' || y!=undefined){
     </div>
   </div>
   </div> 
+
 {% endif %}
   
 
 
-
+  {% block 'js' %}
+    
+  <script> 
+ document.getElementById('form').addEventListener('submit',function(event){
+   event.preventDefault()
+   
+   $.ajax({
+     url:'/personalinfo',
+     data: {'gender':$('input[name=group1]:checked').val()},
+     success: function(data){
+       if(data.dashboard==1){
+         window.location = '/dashboard'
+       }
+     }
+   })
+ })
+    </script>
+  {% endblock 'js' %}
 
 
 

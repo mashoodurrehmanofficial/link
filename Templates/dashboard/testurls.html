@@ -42,7 +42,11 @@
             url:'/dashboard/registermyvisit',
             data:{'visited_link':text,'username':username,'ip':ip,'country':country},
             success:function(data){
-                // alert(data.data)
+                if(data.status=='registered'){
+                    swal('Congratulations','Visit registered successfully !', 'success')
+                }else if(data.status=='packetexpired'){
+                    swal('Sorry !','Your packet has been expired', 'warning')
+                }
             }
         })
         

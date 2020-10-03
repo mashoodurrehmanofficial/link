@@ -113,9 +113,12 @@ TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
-USE_L10N = True
+ 
 
-USE_TZ = True
+
+DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S' 
+USE_L10N = False
+USE_TZ = False 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST_USER = "mashoodurrehmanofficial@gmail.com"
@@ -138,3 +141,4 @@ STATICFILES_DIRS = [
 # git config --global user.email "mashoodurrehmanofficial.com".
 MEDIA_URL = '/Media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'Media')
+

@@ -14,6 +14,7 @@ urlpatterns = [
     path('statistics/', statistics, name='statistics'), 
     path('testurls/', testurls, name='testurls'),  
     path('registermyvisit/', registermyvisit, name='registermyvisit'),  
+    path('claimTank/', claimTank, name='claimTank'),  
        
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

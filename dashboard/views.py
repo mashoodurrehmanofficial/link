@@ -4,14 +4,23 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout  
 from django.contrib.auth.decorators import login_required
 from django.core.mail import send_mail
+from django.core.exceptions import ObjectDoesNotExist
 from root.models import *
 from .models import *
-import requests,time,random,uuid
-from datetime import  datetime
+import requests,time,random,uuid,datetime
+
 # Create your views here. 
 
 
- 
+def packetcompletionanamoly(request):
+    required_profile = Profile.objects.get(admin=request.user)
+    if required_profile.currentpacketitemsremaining==0:
+        required_profile.current_packet_completed=True
+        required_profile.save()
+    if required_profile.current_packetlength==required_profile.packetitemsvisited:
+        required_profile.current_packet_completed=True
+        required_profile.save()
+    else:pass
 
 
 # Create your views here.
@@ -21,6 +30,7 @@ from datetime import  datetime
 
 @login_required(login_url='/login')
 def dashboard(request):  
+    packetcompletionanamoly(request)
     user_profile = Profile.objects.get(admin=request.user)
     alloted_links = CurrentPacket.objects.filter(admin=request.user) 
     counting = len(alloted_links)
@@ -40,7 +50,7 @@ def claimtraffic(request):
     context={
         'user_urls':user_urls,
         'user_profile':user_profile,
-        'title':'claimtraffic'
+        'title':'ClaimTraffic'
     }
     return render(request, 'dashboard/claimtraffic.html',context)
 
@@ -55,7 +65,7 @@ def configureurls(request):
     context={
         'user_urls':user_urls,
         'user_profile':user_profile,
-        'title':'Dashboard'
+        'title':'Configure URLs'
     }
     return render(request, 'dashboard/configureurls.html',context)
   
@@ -65,15 +75,20 @@ from django.forms.models import model_to_dict
 # STATISTICS
 @login_required(login_url='/login')
 def statistics(request):  
+    packetcompletionanamoly(request)
     user_profile = Profile.objects.get(admin=request.user)
     user_urls = UserUrlssRepository.objects.filter(admin=request.user).order_by('-id')
-    total_configured_urls = UserUrlssRepository.objects.filter(admin=request.user).count()  
+    total_configured_urls = UserUrlssRepository.objects.filter(admin=request.user).count() 
+    packetcreationtime = datetime.datetime.fromtimestamp(user_profile.packet_creation_time)
+    linksinqueue=ClaimTank.objects.filter(admin=request.user).count()
     # current_packet = CurrentPacket
     context={
         'user_urls':user_urls,
         'user_profile':user_profile,
-        'title':'Dashboard',
-        'total_configured_urls':total_configured_urls
+        'title':'Statistics',
+        'total_configured_urls':total_configured_urls,
+        'packetcreationtime': str(packetcreationtime),
+        'linksinqueue':linksinqueue
     }
     return render(request, 'dashboard/statistics.html',context)
   
@@ -96,13 +111,22 @@ def testurls(request):
 from .linkpacketallocation import linkpackallocation
 def grablinkspacket(request):
     alloted_links = linkpackallocation(request)
-    return JsonResponse({'alloted':True,'alloted_links':alloted_links})
-    # else:
-    #     return JsonResponse({'alloted':False,'alloted_links':[0]})
+    return JsonResponse({'alloted':alloted_links[0],'alloted_links':alloted_links[1],'extra':alloted_links[2]})
     
- 
+     
+    
 from .bidirectionalvisitregistry import  bidirectionalvisitregistry
 def registermyvisit(request): 
-    bidirectionalvisitregistry(request)
-    return JsonResponse({'data':12})
+    try:
+        bidirectionalvisitregistry(request)
+        return JsonResponse({'status':'registered'})
+    except ObjectDoesNotExist:
+        return JsonResponse({'status':'packetexpired'})
+        
+    
+    
+    
+from .claimTANKsecurity import claimTANKsecurity
+def claimTank(request):  
+    return claimTANKsecurity(request)
     

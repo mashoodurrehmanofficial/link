@@ -32,19 +32,68 @@
                 <!-- GRAB LINKS FORM -->
                 <div id="grabpacketdiv" style="display: flex;justify-content: center;align-items: center;padding: 0px 10px !important;">
                 <form id="grabpacketform" style="padding: 0px 20px !important;">
-                    <div class="input-field" style="width: 200px;">
+                    <div class="input-field avaliblelimits" style="width: 200px;">
                         <select> 
                         <option value="" disabled selected>Choose amount of links</option>
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="15">15</option>
                         </select>
-                        <label>Grab Links</label>
+                        <label>Grab Links</label><br><br><br>
                     </div>  
-                    <div> <br><br><br>
-                        <button style="width: 200px;"  class="btn grey gradient1 ">Grab Links Packet</button>
-                    </div> 
+                    <div> 
+                        <button  style="width: 200px;"  class="grabpacketbutton btn grey gradient1 ">Grab Links Packet</button>
+                    </div>  
+<!-- LOADER -->
+<div id="loader" style="display:  none;"><br>
+    <div style="display: flex;justify-content: center;align-items: center;">
+      <div class="preloader-wrapper big active">
+        <div class="spinner-layer spinner-blue">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+    
+        <div class="spinner-layer spinner-red">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+    
+        <div class="spinner-layer spinner-yellow">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+    
+        <div class="spinner-layer spinner-green">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div><div class="gap-patch">
+            <div class="circle"></div>
+          </div><div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- END PRELOADER -->
+    
                 </form> 
+                
                 </div>
                 <!-- END GRAB LINKs FORM -->
             {% else %} 
@@ -62,30 +111,25 @@
                     </div>
                     <!-- FOR PENDING LINKS -->
                     {% else %}
-                      <div class="grey lighten-5 ">
+                      <div style="cursor: pointer;" class="grey lighten-5" onclick="copyitem('{{alloted_link.grabbedlink}}')" id="{{alloted_link.grabbedlink}}">
                             <span class="alloted_link_span  " id="alloted_link_span" style="padding: 0%;padding-left: 5px;display: block;font-size: 16px;padding: 8px 15px 8px 20px;" >
-                                <a id="alloted_link" href="{{alloted_link.grabbedlink}}"  target="_blank">{{alloted_link.grabbedlink}}</a>   
+                                <a id="alloted_link">{{alloted_link.grabbedlink}}</a>   
                             </span>
                             <div class="divider" style="margin-top: 0px !important;"></div>   
                         </div>
-                    {% endif %}
-                    
-                    
+                    {% endif %} 
                     {% endfor %}
-                </div>
-
-            {% endif %} 
-            
-            <div id="grabbedlinks"> 
- 
+                </div> 
+            {% endif %}  
+            <div id="grabbedlinks">  
             </div> 
           </div>
         </div>
         </div>
     </div>
-
-   
  
+
+    <input  id="copytextinput" style="height: 1px;width: 1px;" type="text" name="" id="">
     
 
 
@@ -94,38 +138,72 @@
 {% endblock 'mainbody' %} 
 {% block 'js' %} 
 <script> 
+function copyitem(x){
+  $('#copytextinput').val(x)
+  $('#copytextinput').select()
+  document.execCommand("copy");
+  M.toast({html: 'Link Copied', classes: 'rounded green'});
+}
+function resetter(){
+    $('.avaliblelimits').show()
+    $('.grabpacketbutton').show()
+    $('#loader').hide()
+}
+
 var capacity = ''
 $('select').change(function(){
     capacity = $(this).val()
 })
 $('#grabpacketform').submit(function(event){
-    event.preventDefault()
+    event.preventDefault() 
     if(!capacity<1){ 
         $.ajax({
+        beforeSend:function(){
+            $('.avaliblelimits').hide()
+            $('.grabpacketbutton').hide()
+            $('#loader').show()
+        },
         url:'/dashboard/grablinkspacket',
         data:{'capacity':capacity},
-        success:function(data){
-            if(data.alloted==true){
+        success:function(data){ 
+            if(data.alloted==true){ 
                 for(y=0;y<data.alloted_links.length;y++){ 
+                    value = data.alloted_links[y]
                 $('#grabbedlinks').append(` 
                 <div class="divider" style="margin-top: 0px !important;"></div> 
-                <div class="grey lighten-5 ">
-                    <span class="alloted_link_span  " id="alloted_link_span" style="padding: 0%;padding-left: 5px;display: block;font-size: 16px;padding: 8px 15px 8px 20px;" >
-                        <a id="alloted_link" href="${data.alloted_links[y]}" >${y+1} ${data.alloted_links[y]}</a>   
+                <div style="cursor: pointer;" class="grey lighten-5" onclick="copyitem('${value}')" id="{{alloted_link.grabbedlink}}">
+                     <span class="alloted_link_span  " id="alloted_link_span" style="padding: 0%;padding-left: 5px;display: block;font-size: 16px;padding: 8px 15px 8px 20px;" >
+                        <a id="alloted_link" >${data.alloted_links[y]}</a>   
                     </span>
                         <div class="divider" style="margin-top: 0px !important;"></div>   
                 </div>  
-                `) 
+                `)  
                 $('#grabpacketdiv').hide()
                 $('#relativetitle').html('Complete Links Packet')
             }
-            }else if(data.alloted==false){
-                alert("Please complete you's current Link Packet to grab more.")
+            if(data.extra=='lesslinks'){
+              swal('Sorry !','Sorry for less links.\nThis is due to some server restrictions.\nThis would not affect yours account.' , 'warning')
+ 
+                resetter()
             }
+            }else if(data.alloted_links=='balanceisextra'){
+              
+                swal('Sorry !',"Please CLAIM some traffic to grab packet\nSo that other user can also grab and provide traffic to you back.", 'warning')
+                resetter()
+            }else if(data.alloted_links=='emptyrepository'){
+              swal('Sorry !','Please try later because Link Repository is empty !' , 'warning')
+     
+                resetter()
+            }else if (data.alloted_links=='grablimitexceed'){
+              swal('Sorry !','Grabbing Limit exceeded.\nPlease try Later !' , 'warning')
+             
+                resetter()
+            } 
         }
     })
     }else{
-        alert("Please select any amount of links")
+      swal('Sorry !',"Please select any amount of links" ,'warning')
+       
     }
 })
 </script>

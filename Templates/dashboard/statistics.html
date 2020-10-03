@@ -37,7 +37,7 @@ ul#statisticsdataul p{
                         <ul id="statisticsdataul">
                             <p style="font-size: px;"><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> ID: {{ user_profile.current_packetID}}</p>
                             <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Completeion: {{user_profile.packetitemsvisited}} out of {{user_profile.current_packetlength}}</p>
-                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Creation Date: {{user_profile.packet_creation_time}}</p>
+                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Creation Time: {{packetcreationtime}}</p>
                             
                             {% if user_profile.packetitemsvisited == user_profile.current_packetlength %}
                             <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Status: Completed</p>
@@ -65,8 +65,8 @@ ul#statisticsdataul p{
                     <div style="margin: 0% !important;">
                         <ul id="statisticsdataul">
                             <p><i style="font-size: 15px;" class="material-icons orange-text ">stop_circle</i> Total successful jobs: {{user_profile.totalregisteredvisits}}</p>
-                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Total claimed traffic: 140</p>
-                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Total visits returned back: 89</p>
+                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Total claimed traffic: {{user_profile.totalclaimedtraffic}}</p>
+                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Total visits returned back: {{user_profile.totaltrafficreturnedback}}</p>
                             <!-- <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p> -->
                         </ul>
                         </p>
@@ -87,9 +87,10 @@ ul#statisticsdataul p{
                     <div style="margin: 0% !important;">
                         <ul id="statisticsdataul">
                             <p><i style="font-size: 15px;" class="material-icons orange-text ">stop_circle</i> Total reserved tokens: {{user_profile.reserved_tokens}}</p>
-                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Total Links in Queue: 43</p>
-                            <!-- <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p>
-                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p> -->
+                            <p><i style="font-size: 15px;" class="material-icons orange-text ">stop_circle</i> Total remaining balance: {{user_profile.remaining_balance}}</p>
+                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Total Links in Queue: {{linksinqueue}}</p>
+                            <!-- <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> </p> -->
+                            <!-- <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p> -->
                            
                         </ul>
                         </p>

@@ -5,21 +5,186 @@
 <!-- SECTION - Sidebar for medium and large screens -->
 {% include "partials/root/sidebar.html" %}
 <!-- SECTION - USER PROFILE -->
-<main>
+
+
+<div class="sender" style="position: fixed;bottom:15px;right: 15px;z-index: 10001 !important;">
+    <span id="selectedcount" class="white-text green accent-4" style="text-align: center !important;display: none;height:25px;width:25px;padding: 5px;margin: 0px;border-radius:50px;font-size: 13px;top: -9px;right: -1px;position: absolute;">21</span>
+    <a class="btn-floating btn-large waves-effect waves-light gradient1" style="z-index: -1 !important;">
+        <i style="transform: rotate(-45deg);padding-left: 3px;" class="material-icons">send</i>
+    </a>
+</div>
+<main >
     <!-- SECTION - USERID_AUTH -->
     {% if user_profile.gender == '' %} 
     {% include "partials/root/userprofilesetup/useridauth.html" %}
     <!-- SECTION - PROFILE_CARD -->
     {% else %} 
-    
-    <h1>clain Traffic</h1>
-    
+     
 
+<br><br>
+
+<div style="position: relative" >
+    
+    <div class="" style="position: relative;">
+        <div class="" style="position: relative;margin: 0px 20px;">
+            <div class=" card-panel  " style="margin: 0px;padding-left: 0px; padding-right: 0px">
+                <span class="green gradient1 center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-30px;left: 50px;right: 50px;padding: 5px 10px;">Claim Traffic</span>
+                <br>
+                
+                <!-- BALANCE INFORMATION -->
+                <!-- BALANCE INFORMATION -->
+                <!-- Modal Trigger -->
+
+           <div style="display: flex;justify-content: center;align-items:center">
+            <a class="waves-effect waves-light btn modal-trigger right gradient1" href="#modal1"><i class="material-icons left">account_balance</i> Balance Info</a>
+            </div>
+
+            <!-- Modal Structure -->
+            <div id="modal1" class="modal  modal-fixed-footer" >
+                <div class="modal-content" style="padding-bottom:0% ;padding: 0%;">
+                <h4  class="center gradient1" style="padding: 15px 0px;"><b><i class="material-icons ">account_balance</i> Balance Info</b></h4>
+                <div style="text-align: justify;padding:0px 15px;">
+                    <P style="line-height: 15px;">Reserved Token: {{user_profile.reserved_tokens}}</P>
+                    <p style="line-height: 15px;">Remaining Balance: {{user_profile.remaining_balance}}</p style="line-height: 5px;">
+                    <h5 style="text-align: left;font-size: 40px;" class="blue-text text-lighten-1"><b>NOTE</b></h5>
+                    <p>1. Reserved Tokens and Remainig Balance are equal and same have meanings.</p> 
+                    <p>2. Reserved Tokens are updated each time when a user visits your website</p>
+                    <p>3. Remainig Balance is updated each time you cliam traffic for your site in return.</p>
+                    <p>4. If someone doesn't visits your website after Grabbing Packet then don't worry your balance would be updated.</p>
+                </div>
+                </div>
+                <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                </div>
+            </div>
+            <!-- END OF MODEL -->
+
+               
+            
+            
+            <!-- SIGLE URL --> <hr style="visibility: hidden;">
+          <div id="urlcontainer" >
+            {% for user_url in user_urls %}
+
+              <div  class="grey lighten-5 {{user_url.id}}">
+                  <span class="sidebaritems " id=" " style="padding: 0%;padding-left: 5px;display: block;font-size: 16px;padding: 5px 15px 5px 20px;" >
+                    <label class="claimlinkresponsive"> <input type="checkbox" id="claimlink" name="claimlink" value="{{user_url.submitted_url}}"/> <span class="grey-text text-darken-2 claimlinkresponsive">{{user_url.title}}</span> </label>
+                  </span>
+                  <div class="divider" style="margin-top: 0px !important;"></div>  
+              </div > 
+
+
+
+
+             
+
+
+
+              
+           {% endfor %}
+          </div> 
+          </div> 
+        </div>    
+        </div>    
+         
 
     {% endif %}
 </main>  
 {% endblock 'mainbody' %} 
 {% block 'js' %} 
 <script> 
+
+
+
+$(document).ready(function() {
+
+function resetter(){
+    $("input[type=checkbox]").each(function () {
+    $(this).prop("checked", false);
+}); 
+}
+
+$("input[name='claimlink']").change(function(){
+
+    length = $("input[name='claimlink']:checked").length
+    $('#selectedcount').show()
+    if(length==0){
+        $('#selectedcount').hide()
+    }else{
+        $('#selectedcount').html(length)
+    }
+}) 
+
+
+
+
+    
+      $(".sender").click(function(){
+        var claimed_link = [];
+            var capacity = "{{user_profile.remaining_balance}}"
+            $.each($("input[name='claimlink']:checked"), function(){
+                claimed_link.push($(this).val());
+            });
+
+           
+            
+            if((claimed_link.length<capacity || claimed_link.length==capacity)){
+                if(claimed_link.length!=0){
+                    $.ajax({
+                        url:'/dashboard/claimTank',
+                        data:{'claimed_link':  claimed_link.join(",")},
+                        success:function(data){
+                            if(data.status == 'pass'){
+                            resetter()
+                            $("#remaining_balance").html(data.remaining_balance)
+                            $('#selectedcount').hide() 
+                            M.toast({html: 'Claimed links have been listed in Queue', classes: 'grey-text text-lighten-3 rounded green accent-4'});
+                            
+                        }else if(data.status=='durationerror'){
+                            swal('Sorry !','You can claim only ONCE in 10 MINUTES interval' , 'warning')
+                        
+                            resetter()
+                            $('#selectedcount').hide() 
+                        }else if(data.status=='emptytanklinitedlength'){
+                            swal('Sorry !', 'You can claim only limited links for now.\n Please try later !', 'warning')
+                         
+                            resetter()
+                            $('#selectedcount').hide() 
+                        }else if(data.status=='later'){
+                            swal('Sorry !','You can claim only limited links for now.\n Please try later !' , 'warning')
+                             
+                            resetter()
+                            $('#selectedcount').hide() 
+                        }else if(data.status=='zerobalance'){
+                            swal('Sorry !','Sorry you have ZERO balance !' , 'warning') 
+                            resetter()
+                            $('#selectedcount').hide() 
+                        }else if(data.status=='error'){
+                            swal('Sorry !','You can claim only limited links for now.\n Please try later !' , 'warning') 
+                            resetter()
+                            $('#selectedcount').hide() 
+                            
+                        }
+                        }
+                    }) 
+                }else{
+                    swal('Please !',"Select any Link to Claim" , 'warning') 
+                }
+            }else if(capacity==0){
+                swal('Sorry !', "Sorry you have ZERO balance !", 'warning') 
+            }
+            else if(claimed_link.length>capacity){
+                swal('Please !', "Please claim links in accordance with your Balance", 'info') 
+            }else if(capacity==0){
+                swal('Sorry !',"Sorry you have ZERO balance !" , 'warning') 
+            }
+        }); 
+ 
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.modal');
+    var instances = M.Modal.init(elems, {'Modal':true});
+  });
 </script>
 {% endblock 'js' %}     
