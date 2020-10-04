@@ -99,7 +99,7 @@ def ReturnedBackHistory(request):
     pure_links=[x.submitted_url for x in UserUrlssRepository.objects.filter(admin=request.user)]
     historyitems=UserVisitingHistory.objects.filter(pure_link__in=pure_links).order_by('-id')
     
-    print(historyitems)
+    # print(historyitems)
     context={
         'historyitems':historyitems,
         

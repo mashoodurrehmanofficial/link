@@ -62,6 +62,9 @@ TEMPLATES = [
         'DIRS': ['Templates'],
         'APP_DIRS': True,
         'OPTIONS': {
+            'builtins': [
+                # 'dashboard.templatetags.get_rate',
+            ],
             'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',

@@ -23,10 +23,7 @@
   <div class="" style="position: relative;margin: 0px 20px;">
     <div class=" card-panel  " style="margin: 0px;padding:20px 0px 0px 0px">
       <span class="green gradient1 center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-30px;left: 50px;right: 50px;padding: 5px 10px;">Traffic Returned Back</span>
-      <br> 
-  
-  
-  
+      <br>  
       <!-- SIGLE URL --> <hr style="visibility: hidden;">
     <div id="urlcontainer">
       <ul class="collapsible" id="accordul">
@@ -35,7 +32,7 @@
             <div class="collapsible-header sidebaritems ">{{historyitem.pure_link}}</div>
             <div class="collapsible-body">
               <span>This Link was visited from <span style="border-radius: 10px;padding: 2px 5px;" class="gradient1 white-text">{{historyitem.country}} </span> with <span style="border-radius: 10px;padding: 2px 5px;" class="gradient1 white-text"> IP: {{historyitem.ip}} </span></span>
-   
+              <!-- <span class="visiting_time" id="{{historyitem.visiting_time}}">{{historyitem.visiting_time}}</span> -->
             </div>
           </li>
       {% endfor %}
@@ -44,21 +41,7 @@
     </div>
     <input  id="copytextinput" style="height: 1px;width: 1px;display: none;" type="text" name="" id="">
   </div>    
-  </div>   
-
-
-
-
-
-
-
-
-
-
-
-
-  
- 
+  </div>    
    
   
     
@@ -73,5 +56,8 @@
     var instances = M.Collapsible.init(elems, {Collapsible:true,accordion: true});
   });
   $( "#accordul li" ).first().addClass('active');
+  $('.visiting_time').each(function(){
+    // alert(this.id) 
+  })
 </script>
 {% endblock 'js' %}     

@@ -130,11 +130,11 @@ def verifyweblinkandsubmit(request):
     # CHECKING FOR DUPLICATES
     AVALIABLE_NETLOCS = [x.website for x in Profile.objects.all()]
     print(AVALIABLE_NETLOCS) 
-    try:
-        status_code=requests.get(analyzed_linkforrequest).status_code
-    except: 
-        print(0)
-        return JsonResponse({"status":'invalid'})
+    # try:
+    #     status_code=requests.get(link).status_code
+    # except: 
+    #     print(0)
+    #     return JsonResponse({"status":'invalid'})
     try:
         # CHECKING VALIDNESS
         
@@ -149,19 +149,10 @@ def verifyweblinkandsubmit(request):
             required_profile.website = analyzed_linknetloc
             required_profile.userid = str(analyzed_linknetloc).replace('.','')
             required_profile.save()
-            return JsonResponse({"status":status_code})
+            return JsonResponse({"status":200}) 
         
     except:
-        return JsonResponse({"status":'invalid'})
-    # required_profile = Profile.objects.get(website=analyzed_link.netloc)
-       
-
-    # website=request.GET['website'] 
-    # user_profile = Profile.objects.get(admin=request.user)
-    # user_profile.userid = str(website).replace('.','')
-    # user_profile.website = website
-    # user_profile.save()
-    
+        return JsonResponse({"status":'invalid'}) 
     return redirect('dashboard') 
 
 def sessioncompleted(request):

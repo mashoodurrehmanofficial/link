@@ -147,18 +147,17 @@ document.getElementById('sendcode').addEventListener('click', function(){
     <br>
     <br>
       <div id="weblinkdiv" class="input-field">
-        <input name="weblink" id="weblink" type="text" class="validate" required>
-        <label for="weblink">Enter website link  e.g www.example.com</label>
+        <input id="url" name="url" type="text" class="validate" required> 
+        <label for="url">Enter website link  e.g www.example.com</label>
       </div>   
     <span id="verifylink" class="green btn" style="text-transform: none;width: 100%;font-size: large;">Verify Link </span>
 </div>
 </div>
 </div> 
-<script> 
-var weblink = document.getElementById('weblink')
-document.getElementById('verifylink').addEventListener('click', function(){ 
-var y = new URL(weblink.value) 
-var resultatnID = ''
+<script>  
+
+document.getElementById('verifylink').addEventListener('click', function(){  
+var y = new URL($('#url').val())  
 if(y!='' || y!=undefined){
 
   $.ajax({
