@@ -38,8 +38,5 @@ from urllib import parse
 
 # y=math.isclose(a, b, abs_tol=2)
 # print(x,y)
-import datetime
-
-x=1
-++x
-print(x)
+x = 'SHAJ'
+print(x.lower())

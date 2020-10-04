@@ -129,7 +129,7 @@
     </div>
  
 
-    <input  id="copytextinput" style="height: 1px;width: 1px;" type="text" name="" id="">
+    <input  id="copytextinput" style="height: 1px;width: 1px;display: none;" type="text" name="" id="">
     
 
 
@@ -139,10 +139,13 @@
 {% block 'js' %} 
 <script> 
 function copyitem(x){
+  $('#copytextinput').show()
   $('#copytextinput').val(x)
   $('#copytextinput').select()
   document.execCommand("copy");
-  M.toast({html: 'Link Copied', classes: 'rounded green'});
+  
+  $('#copytextinput').hide()
+  M.toast({html: 'Link Copied', classes: 'rounded green',displayLength:800});
 }
 function resetter(){
     $('.avaliblelimits').show()

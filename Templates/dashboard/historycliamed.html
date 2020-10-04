@@ -1,0 +1,77 @@
+
+{% extends 'base.html' %}
+{% block 'mainbody' %}
+
+    <!-- Setting UP ID -->
+<!-- SECTION - Sidebar for medium and large screens -->
+{% include "partials/root/sidebar.html" %}
+
+<!-- SECTION - USER PROFILE -->
+<main>
+    
+{% if user_profile.gender == '' %} 
+{% include "partials/root/userprofilesetup/useridauth.html" %}  
+{% else %}  
+<br><br>
+
+
+
+
+
+<div style="position: relative" >
+  <div class="" style="position: relative;">
+  <div class="" style="position: relative;margin: 0px 20px;">
+    <div class=" card-panel  " style="margin: 0px;padding:20px 0px 0px 0px">
+      <span class="green gradient1 center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-30px;left: 50px;right: 50px;padding: 5px 10px;">Traffic Returned Back</span>
+      <br> 
+  
+  
+  
+      <!-- SIGLE URL --> <hr style="visibility: hidden;">
+    <div id="urlcontainer">
+      <ul class="collapsible" id="accordul">
+        {% for historyitem in historyitems %} 
+          <li class="">
+            <div class="collapsible-header sidebaritems ">{{historyitem.pure_link}}</div>
+            <div class="collapsible-body">
+              <span>This Link was visited from <span style="border-radius: 10px;padding: 2px 5px;" class="gradient1 white-text">{{historyitem.country}} </span> with <span style="border-radius: 10px;padding: 2px 5px;" class="gradient1 white-text"> IP: {{historyitem.ip}} </span></span>
+   
+            </div>
+          </li>
+      {% endfor %}
+  </ul>
+    </div>
+    </div>
+    <input  id="copytextinput" style="height: 1px;width: 1px;display: none;" type="text" name="" id="">
+  </div>    
+  </div>   
+
+
+
+
+
+
+
+
+
+
+
+
+  
+ 
+   
+  
+    
+   {% endif %}
+</main>  
+
+{% endblock 'mainbody' %} 
+{% block 'js' %} 
+<script> 
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems, {Collapsible:true,accordion: true});
+  });
+  $( "#accordul li" ).first().addClass('active');
+</script>
+{% endblock 'js' %}     

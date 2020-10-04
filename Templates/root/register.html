@@ -20,14 +20,14 @@
 <div class="container">
 <div class="container">
 
-<form action="" method="post" class=" card-panel grey lighten-5" style="position: relative;">{% csrf_token %}
+<form  id="regform" method="post" class=" card-panel grey lighten-5" style="position: relative;">{% csrf_token %}
   <br>
   <h4 id="statrelativetitle" class="gradient1 center white-text z-depth-2" style="font-size: 30px;margin: 0px;position: absolute;top:-4px;left: 50px;right: 50px;padding: 5px 0px;">
     <i class="material-icons ">person_add </i> Register
   </h4>
   <div style="margin-top: 8px;"> 
     <div class="input-field">
-      <input name="name" id="name" type="text" class="validate" required>
+      <input name="name" id="name" type="text" min="8" class="validate" required>
       <label for="name">Username</label>
     </div> 
   
@@ -58,5 +58,19 @@
 </div>
 </div>
 
-
 {% endblock %}
+
+{% block 'js' %}
+<script> 
+$('#regform').submit(function(event){
+  if($('#name').val().length<=8){
+    event.preventDefault()
+    swal('Please !', 'Select a name of minimum length of 8', 'info')
+  }else if($('#password').val().length<=8){
+    event.preventDefault()
+    swal('Please !', 'Select a password of minimum length of 8', 'info')
+  }
+
+})
+</script>
+{% endblock 'js' %}

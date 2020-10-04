@@ -93,6 +93,23 @@ def statistics(request):
     return render(request, 'dashboard/statistics.html',context)
   
 
+
+def ReturnedBackHistory(request):  
+    packetcompletionanamoly(request)
+    pure_links=[x.submitted_url for x in UserUrlssRepository.objects.filter(admin=request.user)]
+    historyitems=UserVisitingHistory.objects.filter(pure_link__in=pure_links).order_by('-id')
+    
+    print(historyitems)
+    context={
+        'historyitems':historyitems,
+        
+    }
+    return render(request, 'dashboard/historycliamed.html',context)
+  
+
+
+
+
 # testurls
 @login_required(login_url='/login')
 def testurls(request):  

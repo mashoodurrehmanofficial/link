@@ -138,7 +138,7 @@ $("input[name='claimlink']").change(function(){
                             resetter()
                             $("#remaining_balance").html(data.remaining_balance)
                             $('#selectedcount').hide() 
-                            M.toast({html: 'Claimed links have been listed in Queue', classes: 'grey-text text-lighten-3 rounded green accent-4'});
+                            M.toast({html: 'Claimed links have been listed in Queue', classes: 'grey-text text-lighten-3 rounded green accent-4',displayLength:800});
                             
                         }else if(data.status=='durationerror'){
                             swal('Sorry !','You can claim only ONCE in 10 MINUTES interval' , 'warning')

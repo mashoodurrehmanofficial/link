@@ -15,9 +15,9 @@ def index(request):
 # REGISTER PAGE
 def register(request):
     if request.method == 'POST':
-        name = request.POST['name']
-        email = request.POST['email']        
-        password = request.POST['password']
+        name = str(request.POST['name']).lower()
+        email = request.POST['email']
+        password = str(request.POST['password']).lower()
         new_user = User.objects.create_user(username=name,password=password,email=email)
         new_user.save()
         return redirect('login')
@@ -29,8 +29,8 @@ def user_login(request):
     if request.user.is_authenticated:
       return  redirect('/')
     if request.method == 'POST':
-      username = request.POST['name']
-      password = request.POST['password']
+      username = str(request.POST['name']).lower()
+      password = str(request.POST['password']).lower()
     #   try:
     #     captcha_token=request.POST.get("g-recaptcha-response")
     #     cap_url="https://www.google.com/recaptcha/api/siteverify"

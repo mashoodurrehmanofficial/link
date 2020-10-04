@@ -66,7 +66,7 @@ ul#statisticsdataul p{
                         <ul id="statisticsdataul">
                             <p><i style="font-size: 15px;" class="material-icons orange-text ">stop_circle</i> Total successful jobs: {{user_profile.totalregisteredvisits}}</p>
                             <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Total claimed traffic: {{user_profile.totalclaimedtraffic}}</p>
-                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Total visits returned back: {{user_profile.totaltrafficreturnedback}}</p>
+                            <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Total visits returned back: {{user_profile.totaltrafficreturnedback}} <a href="{% url 'ReturnedBackHistory' %}">more +</a></p>
                             <!-- <p><i style="font-size: 15px;" class="material-icons green-text ">stop_circle</i> Lorem ipsum dolor sit amet.</p> -->
                         </ul>
                         </p>

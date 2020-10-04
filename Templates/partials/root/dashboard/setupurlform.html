@@ -110,7 +110,7 @@
 
 
   </div>
-  <input  id="copytextinput" style="height: 1px;width: 1px;" type="text" name="" id="">
+  <input  id="copytextinput" style="height: 1px;width: 1px;display: none;" type="text" name="" id="">
 </div>    
 </div>    
 
@@ -122,10 +122,12 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function copyitem(x){
+  $('#copytextinput').show()
   $('#copytextinput').val(x)
   $('#copytextinput').select()
   document.execCommand("copy");
-  M.toast({html: 'Link Copied', classes: 'rounded green'});
+  $('#copytextinput').hide()
+  M.toast({html: 'Link Copied', classes: 'rounded green',displayLength:800});
 }
 
 function deleteitem(x){
@@ -156,7 +158,8 @@ document.getElementById('verifysubmiturlform').addEventListener('submit',functio
               submitted_url=data.submitted_url  
               
                 document.getElementById("verifysubmiturlform").reset();
-                M.toast({html: 'Url verified and submitted Successfully!', classes: 'rounded green'});
+                M.toast({html: 'Url verified and submitted Successfully!', classes: 'rounded green',displayLength:800});
+             
                 $('#loader').hide()
                 $('#verifysubmiturl').show() 
                 $(`#urlcontainer`).prepend(`<div class="divider" style="margin-top: 0px !important;"></div> 
